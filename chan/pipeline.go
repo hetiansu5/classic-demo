@@ -6,8 +6,7 @@ import "fmt"
 func main() {
 	c := gen(2, 3)
 	out := sq(c)
-
-	// Consume the output.
+	
 	for b := range out {
 		fmt.Println(b)
 	}
