@@ -2,8 +2,8 @@ package main
 
 import "fmt"
 
+// Set up the pipeline.
 func main() {
-	// Set up the pipeline.
 	c := gen(2, 3)
 	out := sq(c)
 
