@@ -34,18 +34,8 @@ func TestBinaryInsertSort(t *testing.T) {
 
 func TestBinarySearch(t *testing.T) {
 	arr := []int{1, 3, 6, 20, 40}
-	r := binarySearch(arr, 5, 0, 4)
+	r := BinarySearch(arr, 4)
 	if r != 2 {
-		t.Error("binary search error")
-	}
-
-	r = binarySearch(arr, 41, 0, 4)
-	if r != 5 {
-		t.Error("binary search error")
-	}
-
-	r = binarySearch(arr, -1, 0, 4)
-	if r != 0 {
 		t.Error("binary search error")
 	}
 }
@@ -83,4 +73,22 @@ func copyArray(arr []int) []int {
 		newArr[k] = v
 	}
 	return newArr
+}
+
+func TestMergeSort(t *testing.T) {
+	arr := copyArray(origin)
+	MergeSort(arr)
+	fmt.Println(origin, arr)
+	if !reflect.DeepEqual(arr, target) {
+		t.Error("merge sort error")
+	}
+}
+
+func TestQuickSort(t *testing.T) {
+	arr := copyArray(origin)
+	QuickSort(arr)
+	fmt.Println(origin, arr)
+	if !reflect.DeepEqual(arr, target) {
+		t.Error("quick sort error")
+	}
 }

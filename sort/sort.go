@@ -53,68 +53,89 @@ func BubbleSort(A []int) {
 }
 
 //归并排序：将数组拆分成子数组，再对子数组合并为排序好的大数组
-func MergeSort(A []int) []int {
-	length := len(A)
-	if length <= 1 {
-		return A
-	}
+func MergeSort(A []int) {
+	mergeSortRange(A, 0, len(A)-1)
+}
 
-	middle := length / 2
-	left := ShellSort(A[0:middle])
-	len1 := len(left)
-	right := ShellSort(A[middle:])
-	len2 := len(right)
-	arr := make([]int, length)
-	for i,j,k := 0, 0, 0; k < length; k++ {
-		if i == len1 {
-			arr[k] = right[j]
+func mergeSortRange(A []int, p, q int) {
+	if p >= q {
+		return
+	}
+	var mid int
+	mid = (p + q) / 2
+	mergeSortRange(A, p, mid)
+	mergeSortRange(A, mid+1, q)
+	mergeArray(A[p:q+1], A[p:mid+1], A[mid+1:q+1])
+}
+
+func mergeArray(A []int, A1 []int, A2 []int) {
+	i := 0
+	j := 0
+	l := len(A1) + len(A2)
+	B := make([]int, l)
+	for ; i+j < l; {
+		if i >= len(A1) {
+			B[i+j] = A2[j]
 			j++
-		} else if j == len2 {
-			arr[k] = left[i]
+			continue
+		} else if j >= len(A2) {
+			B[i+j] = A1[i]
+			i++
+			continue
+		}
+
+		if A1[i] < A2[j] {
+			B[i+j] = A1[i]
 			i++
 		} else {
-			if left[i] <= right[j] {
-				arr[k] = left[i]
-				i++
-			} else {
-				arr[k] = right[j]
-				j++
-			}
+			B[i+j] = A2[j]
+			j++
 		}
 	}
-	return arr
+	for k, v := range B {
+		A[k] = v
+	}
 }
 
-//二分查找
-func binarySearch(A []int, base, start, end int) int {
-	if base < A[start] {
-		return start
-	} else if base > A[end] {
-		return end + 1
-	}
-	return middleBinarySearch(A, base, start, end)
+//二分查b找
+func BinarySearch(A []int, value int) int {
+	return binarySearchInternally(A, 0, len(A)-1, value)
 }
 
-func middleBinarySearch(A []int, base, start, end int) int {
-	if end == start {
-		return start
+func binarySearchInternally(A []int, start, end, value int) int {
+	if start > end {
+		return -1
 	}
 
-	m := (start + end) / 2
-	if base < A[m] {
-		if end == m {
-			end--
-		} else {
-			end = m
-		}
-	} else if base > A[m] {
-		if start == m {
-			start++
-		} else {
-			start = m
-		}
+	mid := start + (end-start)/2
+	if A[mid] == value {
+		return mid
+	} else if A[mid] < value {
+		return binarySearchInternally(A, start, mid-1, value)
 	} else {
-		return m
+		return binarySearchInternally(A, mid+1, end, value)
 	}
-	return middleBinarySearch(A, base, start, end)
+}
+
+//快速排序
+func QuickSort(A []int) {
+	quickSortRange(A, 0, len(A)-1);
+}
+
+func quickSortRange(A []int, p int, q int) {
+	if p >= q {
+		return
+	}
+
+	pivot := q;
+	j := p;
+	for i := p; i <= q-1; i++ {
+		if A[i] < A[pivot] {
+			A[i], A[j] = A[j], A[i];
+			j++
+		}
+	}
+	A[j], A[pivot] = A[pivot], A[j]
+	quickSortRange(A, p, j-1)
+	quickSortRange(A, j+1, q)
 }

@@ -44,6 +44,23 @@ func postOrderTraversal(node *Node) {
 	print(node.Data, " ")
 }
 
+//层级遍历
+//原理：通过队列的先入先出原则，取出根节点，将左右子节点入队，从队列依次取出左右节点，打印并将左右子节点继续入队
+func levelOrderTraversal(node *Node) {
+	S := make([]*Node, 1)
+	S[0] = node
+	var T *Node
+	for len(S) > 0 {
+		T = S[0]
+		S = S[1:]
+		if T != nil {
+			print(T.Data, " ")
+			S = append(S, T.Left)
+			S = append(S, T.Right)
+		}
+	}
+}
+
 //堆栈前序遍历
 func preOrderTraversalByStack(node *Node) {
 	S := make([]*Node, 0)
@@ -117,6 +134,10 @@ func main() {
 
 	println("递归中序遍历")
 	inOrderTraversal(treeHead)
+	println("")
+
+	println("层级遍历")
+	levelOrderTraversal(treeHead)
 	println("")
 
 	println("堆栈中序遍历")

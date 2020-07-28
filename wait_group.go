@@ -1,4 +1,4 @@
-package classic_demo
+package main
 
 import (
 	"sync"
