@@ -11,9 +11,13 @@ type MapInfo struct {
 
 func main() {
 	var m map[string]int8
+	m = make(map[string]int8)
 	rv := reflect.ValueOf(m)
 
-	fmt.Println(1 << 5)
+	m["a"] = 1
+	bb := reflect.ValueOf("b")
+	fmt.Println(rv.MapIndex(bb))
+
 
 	//map结构键的类型
 	fmt.Println(rv.Type().Key().Kind())

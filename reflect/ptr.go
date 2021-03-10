@@ -49,6 +49,15 @@ func main() {
 	}
 
 	fmt.Println(p.Id, p.Name, p.Child.Caption, p.Child2.Caption)
+
+	//case reflect.Ptr:
+	//	if out.Type().Elem() == reflect.TypeOf(resolved) {
+	//	// TODO DOes this make sense? When is out a Ptr except when decoding a nil value?
+	//	elem := reflect.New(out.Type().Elem())
+	//	elem.Elem().Set(reflect.ValueOf(resolved))
+	//	out.Set(elem)
+	//	return true
+	//	}
 }
 
 func ptrValue(ev reflect.Value)  {
