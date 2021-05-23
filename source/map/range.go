@@ -17,8 +17,8 @@ func main() {
 	//           value = value_temp
 	//           original body
 	//   }
-	for k, v := range m {
-		fmt.Println(v)
+	for k := range m {
+		fmt.Println(k)
 		if k > 10 {
 			m[2] = "2"
 		}

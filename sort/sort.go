@@ -92,19 +92,11 @@ func mergeSortRange(A []int, p, q int) {
 func mergeArray(A []int, A1 []int, A2 []int) {
 	i := 0
 	j := 0
-	l := len(A1) + len(A2)
-	B := make([]int, l)
-	for ; i+j < l; {
-		if i >= len(A1) {
-			B[i+j] = A2[j]
-			j++
-			continue
-		} else if j >= len(A2) {
-			B[i+j] = A1[i]
-			i++
-			continue
-		}
+	l1 := len(A1)
+	l2 := len(A2)
+	B := make([]int, l1 + l2)
 
+	for i < l1 && j < l2 {
 		if A1[i] < A2[j] {
 			B[i+j] = A1[i]
 			i++
@@ -113,14 +105,19 @@ func mergeArray(A []int, A1 []int, A2 []int) {
 			j++
 		}
 	}
-	for k, v := range B {
-		A[k] = v
+
+	if i < l1 {
+		copy(B[i+j:], A1[i:])
+	} else if j < l2 {
+		copy(B[i+j:], A2[j:])
 	}
+
+	copy(A, B)
 }
 
 //快速排序
 func QuickSort(A []int) {
-	quickSortRange(A, 0, len(A)-1);
+	quickSortRange(A, 0, len(A)-1)
 }
 
 func quickSortRange(A []int, p int, q int) {
@@ -128,15 +125,37 @@ func quickSortRange(A []int, p int, q int) {
 		return
 	}
 
-	pivot := q;
-	j := p;
+	pivot := q
+	j := p
 	for i := p; i <= q-1; i++ {
 		if A[i] < A[pivot] {
-			A[i], A[j] = A[j], A[i];
+			A[i], A[j] = A[j], A[i]
 			j++
 		}
 	}
 	A[j], A[pivot] = A[pivot], A[j]
 	quickSortRange(A, p, j-1)
 	quickSortRange(A, j+1, q)
+}
+
+func QuickSortRange2(A []int, p, q int) {
+	if p >= q {
+		return
+	}
+
+	pivot := q
+	i := p
+	j := q
+	for i < j {
+		if A[i] > A[pivot] {
+			j--
+			A[i], A[j] = A[j], A[i]
+		} else {
+			i++
+		}
+	}
+	A[j], A[pivot] = A[pivot], A[j]
+
+	QuickSortRange2(A, p, j-1)
+	QuickSortRange2(A, j+1, q)
 }

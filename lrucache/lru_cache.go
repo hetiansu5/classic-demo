@@ -17,7 +17,7 @@ type lruCache struct {
 
 func New() *lruCache {
 	l := new(lruCache)
-	l.capacity = 1 << 4;
+	l.capacity = 1 << 4
 	l.hashTable = make([]*node, l.capacity)
 	return l
 }
