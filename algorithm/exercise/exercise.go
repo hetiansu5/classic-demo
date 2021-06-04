@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"errors"
+	"fmt"
 )
 
 func faibo(n int) int {
@@ -62,4 +62,42 @@ func main() {
 
 	j := factorial(5)
 	fmt.Println(j)
+
+	tree := &Node{
+		Data: 1,
+		Next: &Node{
+			Data: 2,
+			Next: &Node{
+				Data: 3,
+			},
+		},
+	}
+	fmt.Println(tree)
+	newTree := reverseLinkedList(tree)
+	for {
+		if newTree == nil {
+			break
+		}
+		fmt.Println(newTree.Data)
+		newTree = newTree.Next
+	}
+
+}
+
+type Node struct {
+	Data int
+	Next *Node
+}
+
+func reverseLinkedList(tree *Node) *Node {
+	var newTree *Node
+	next := tree
+	for {
+		if next == nil {
+			break
+		}
+		newTree = &Node{Data:next.Data, Next: newTree}
+		next = next.Next
+	}
+	return newTree
 }

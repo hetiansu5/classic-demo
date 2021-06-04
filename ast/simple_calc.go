@@ -20,7 +20,7 @@ type Node struct {
 }
 
 type scanner struct {
-	step func(*scanner, byte) int69
+	step func(*scanner, byte) int64
 }
 
 func main() {
